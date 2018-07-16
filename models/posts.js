@@ -1,7 +1,7 @@
 const Post = require('../lib/mongo').Post
 const marked = require('marked')
 
-// 将post的content从
+// 将post的content从markdown转换成html
 Post.plugin('contentToHtml', {
     afterFind: posts => {
         return posts.map(post => {
@@ -52,6 +52,24 @@ module.exports = {
         return Post
             .update({ _id: postId }, { $inc: { pv: 1 } })
             .exec()
-    }
+    },
+
+    // 通过文章id获取一篇原生文章（编辑文章）
+    getRawPostById: postId => {
+        return Post
+            .findOne({ _id: postId })
+            .populate({ path: 'author', model: 'User' })
+            .exec()
+    },
+
+    // 通过文章 id 更新一篇文章
+    updatePostById: (postId, data) => {
+        return Post.update({ _id: postId }, { $set: data }).exec()
+    },
+
+    // 通过文章 id 删除一篇文章
+    delPostByd: postId => {
+        return Post.deleteOne({ _id: postId }).exec()
+    },
 }
 
