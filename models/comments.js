@@ -25,5 +25,26 @@ module.exports = {
     // 通过留言 id 删除一个留言
     delCommentById: commentId => {
         return Comment.deleteOne({ _id: commentId }).exec()
-    }
+    },
+
+    // 通过文章 id 删除文章下面所有留言
+    delCommentByPostId: postId => {
+        return Comment.deleteMay({ postId: postId }).exec()
+    },
+
+    // 通过文章id获取该文章下所有留言，按留言创建时间升序
+    getComments: postId => {
+        return Comment
+            .find({ postId })
+            .populate({ path: 'author', model: 'User' })
+            .sort({ _id: 1 })
+            .addCreatedAt()
+            .contentToHtml()
+            .exec()
+    },
+
+    // 通过文章 ID 获取该文章下留言数
+    getCommentsCount: postId => {
+        return Comment.count({ postId }).exec()
+    },
 }
