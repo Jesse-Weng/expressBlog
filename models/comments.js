@@ -3,7 +3,7 @@ const Comment = require('../lib/mongo').Comment
 
 // 将 comment 的content从markdown转换成html
 Comment.plugin('contentToHtml', {
-    afterFind: Comments => {
+    afterFind: comments => {
         return comments.map(comment => {
             comment.content = marked(comment.content)
             return comment
