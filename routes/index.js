@@ -7,4 +7,15 @@ module.exports = function (app) {
     app.use('/signout', require('./signout'))
     app.use('/posts', require('./posts'))
     app.use('/comments', require('./comments'))
+    // 404 page
+    app.use((req, res) => {
+        if (!res.headersSent) {
+            res.status(404).render('404')
+        }
+    })
+
+    app.use((err, req, res, next) => {
+        req.flash('error', err.message)
+        res.redirect('/posts')
+    })
 }
