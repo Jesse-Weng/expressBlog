@@ -6,5 +6,8 @@ config/*
 # dependencies
 /node_modules
 
+#test file
+/coverage
+
 #package-lock
 package-lock.json
