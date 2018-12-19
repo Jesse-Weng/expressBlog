@@ -1,4 +1,4 @@
-# nodeJS blog
+# nodeJS express blog
 
 ## 开发环境
 
