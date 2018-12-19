@@ -15,6 +15,12 @@ router.get('/', function (req, res, next) {
             res.render('posts', {
                 posts: posts
             })
+            // res.json({
+            //     success: true,
+            //     result: {
+            //         posts: posts,
+            //     }
+            // })
         })
         .catch(next)
 })
